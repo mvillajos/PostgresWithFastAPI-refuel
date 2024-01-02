@@ -1,0 +1,10 @@
+CREATE TABLE IF NOT EXISTS refuelop
+(
+    id SERIAL PRIMARY KEY,
+    fecha date,
+    refuelseq integer,
+    importe double precision,
+    preciolitro double precision,
+    litros double precision,
+    totkm integer
+)

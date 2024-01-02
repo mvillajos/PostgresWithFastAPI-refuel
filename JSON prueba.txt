@@ -1,0 +1,12 @@
+Json Ejemplo para probar POST:
+
+{
+	"fecha": "2023-12-01",
+	"refuelseq": 1,
+	"importe": 15,
+	"preciolitro": 1.5,
+	"litros": 10,
+	"totkm": 120000
+}
+
+
