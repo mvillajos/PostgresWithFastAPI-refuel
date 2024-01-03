@@ -28,10 +28,9 @@ const RefuelForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    const dtfecha = fecha.toISOString().split("T")[0];
+    // console.log(dtfecha);
     if (!params.id) {
-      const dtfecha = fecha.toISOString().split("T")[0];
-      // console.log(dtfecha);
-
       const res = await createRefuel({
         fecha: dtfecha,
         refuelseq,
@@ -43,6 +42,8 @@ const RefuelForm = () => {
       console.log(res);
     } else {
       const res = await updateRefuel(params.id, {
+        fecha: dtfecha,
+        refuelseq,
         importe,
         preciolitro,
         litros,
@@ -73,12 +74,12 @@ const RefuelForm = () => {
   }, []);
 
   return (
-    <div className="flex items-center justify-center h-[calc(100vh-10rem)]">
+    <div className="flex items-center justify-center h-[calc(100%-2rem)]">
       <div>
-        <form className="bg-zinc-950 p-10" onSubmit={handleSubmit}>
-          <h1 className="text-3xl font-bold my-4">
+        <form className="bg-zinc-950 py-4 px-16" onSubmit={handleSubmit}>
+          <h4 className="text-2xl font-bold my-2">
             {params.id ? "Update" : "Create"}
-          </h1>
+          </h4>
           <label>
             Fecha
             {/* <input
@@ -167,24 +168,33 @@ const RefuelForm = () => {
           <button className="bg-white hover:bg-slate-800 hover:text-white text-slate-800 py-2 px-4 rounded">
             {params.id ? "Update" : "Create"}
           </button>
-        </form>
 
-        {params.id && (
+          {params.id && (
+            <button
+              className="bg-red-500 hover:bg-red-400 text-white font-bold py-2 rounded mt-5 px-4 ml-4"
+              onClick={async () => {
+                try {
+                  const res = await deleteRefuel(params.id);
+                  console.log(res);
+                  navigate("/");
+                } catch (error) {
+                  console.log(error);
+                }
+              }}
+            >
+              Delete
+            </button>
+          )}
+
           <button
-            className="bg-red-500 hover:bg-red-400 text-white font-bold py-2 rounded mt-5 px-4"
+            className="bg-green-700 hover:bg-green-400 hover:text-gray-500 text-white py-2 px-4 ml-4"
             onClick={async () => {
-              try {
-                const res = await deleteRefuel(params.id);
-                console.log(res);
-                navigate("/");
-              } catch (error) {
-                console.log(error);
-              }
+              navigate("/");
             }}
           >
-            Delete
+            Home
           </button>
-        )}
+        </form>
       </div>
     </div>
   );
